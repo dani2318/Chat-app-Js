@@ -1,136 +1,84 @@
 <!DOCTYPE html>
-<html>
-
-<head>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="dani2318, Co-authored by ...." />
+    <!--Da compilare-->
+    <meta name="copyright" content="Orango Company " />
     <title>Chat</title>
-    <style>
-        body {
-            margin: 0;
-            padding-bottom: 3rem;
-            background-color: #333;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        #form {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 0.25rem;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            height: 3rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
-
-        #input {
-            border: none;
-            padding: 0 1rem;
-            flex-grow: 1;
-            border-radius: 2rem;
-            margin: 0.25rem;
-        }
-        #input:focus {
-            outline: none;
-        }
-
-        #Username{
-            border: none;
-            width: 150px;
-            padding: 0 1rem;
-            border-radius: 2rem;
-            margin: 0.25rem;
-        }
-
-        #Username:focus {
-            outline: none;
-        }
-
-
-        #form>button {
-            background: #333;
-            border: none;
-            padding: 0 1rem;
-            margin: 0.25rem;
-            border-radius: 3px;
-            outline: none;
-            color: #fff;
-        }
-
-        #messages {
-            list-style-type: none;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
-        #messages>li {
-            padding: 0.5rem 1rem;
-        }
-
-        #messages>li:nth-child(odd) {
-            background: #494949;
-        }
-    </style>
     <script>
-      function load(){
+      function load() {
         var socket = io();
-        var usernameIniz = prompt("Inserisci un username","")
-        socket.on('connection', socket.emit('connected', usernameIniz));
+        var usernameIniz = prompt("Inserisci un username", "");
+        socket.on("connection", socket.emit("connected", usernameIniz));
+        return usernameIniz;
       }
     </script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="/socket.io/socket.io.js"></script>
-</head>
+  </head>
 
-<body>
-    <script>
-      load();
-    </script>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input id="input" autocomplete="off" placeholder="Message"/><input id="Username" autocomplete="off" placeholder="Username"/><button>Send</button>
-    </form>
-    <script>
-        var socket = io();
-        var messages = document.getElementById('messages');
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
-        var username = document.getElementById('Username');
-        var nickname = "";
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if(username.value == "" || username == null){
-              alert("Inserisci un nickname prima di inviare un messaggio!");
-              return;
-            }
-            if(input.value.startsWith('/')){
-              console.log('vero')
-              socket.emit('command', msg);
-            }
-            if (input.value) {
-                var msg = [input.value,username.value];
-                socket.emit('message', msg);
-                input.value = '';
-            }
-        });
-        
-        socket.on('user connected', function (msg) {
-            var item = document.createElement('li');
-            item.textContent = msg[0];
-            nickname = msg[1];
-            username.value = nickname;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
-        });
-        socket.on('response', function (msg) {
-            var item = document.createElement('li');
-            item.textContent = msg;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
-        });
-    </script>
-</body>
+  <body>
+    <div class="container">
+      <div class="Chat">
+        <ul id="messages"></ul>
+        <form id="form" action="">
+          <input id="input" autocomplete="off" placeholder="Message" />
+          <input
+            id="Username"
+            autocomplete="off"
+            placeholder="Username"
+          /><button>Send</button>
+        </form>
+      </div>
+      <div class="onlineUsers"></div>
+    </div>
 
+    <script>
+      var nickOnLoad = load();
+      var socket = io();
+      var messages = document.getElementById("messages");
+      var form = document.getElementById("form");
+      var input = document.getElementById("input");
+      var username = document.getElementById("Username");
+      var nickname = "";
+
+      username.innerHTML = nickOnLoad;
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (username.value == "" || username == null) {
+          alert("Inserisci un nickname prima di inviare un messaggio!");
+          return;
+        }
+        if (input.value) {
+          var msg = [input.value, username.value];
+          socket.emit("message", msg);
+          input.value = "";
+        }
+      });
+
+      socket.on("user connected", function (msg) {
+        var item = document.createElement("li");
+        item.textContent = msg[0];
+        nickname = msg[1];
+        username.value = nickname;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+
+      socket.on("chat message", function (msg) {
+        var item = document.createElement("li");
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+
+      socket.on("response", function (msg) {
+        var item = document.createElement("li");
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
+  </body>
 </html>
