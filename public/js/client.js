@@ -37,7 +37,6 @@ function customUsername() {
 
 //Gestione prima connessione
 var profile = new Utente(username,"MainChat", CLIENT_UUID)//[username,CLIENT_UUID]
-console.log(socket.id)
 var data = [profile, "MainChat"]
 socket.on("connection", socket.emit("connected", data));
 
@@ -46,7 +45,6 @@ form.addEventListener("submit", function (e) {
     e.preventDefault();
     if (input.value == "") return;
     if (input.value) {
-        console.log([profile, "MainChat", input.value])
         socket.emit("message", [profile, "MainChat", input.value]);
 
         var item = document.createElement("li");
@@ -83,7 +81,6 @@ socket.on("chat message", function (msg) {
 });
 
 socket.on("chatEvent",(msg) => {
-    console.log(msg)
     var item = document.createElement("li")
     item.textContent = msg
     messages.appendChild(item);
@@ -101,7 +98,6 @@ socket.emit("getUsers")
 setInterval('socket.emit("getUsers")', 1000)
 
 socket.on('response-Users', (msg) => {
-    console.log(msg)
     updateUserlist(msg)
 })
 

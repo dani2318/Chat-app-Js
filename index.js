@@ -1,12 +1,14 @@
 const express = require("express")
-const app = express();
 const http = require('http')
-const server = http.createServer(app);
 const { Server } = require("socket.io");
+
+const app = express();
+
+const server = http.createServer(app);
 const io = new Server(server);
+
 var utenti=[];
 const room = ["MainChat"];
-var utentiOnlineConta = utenti.length;
 
 app.use(express.static(__dirname + '/public'));
 app.get('/public', (req, res) => {
@@ -55,16 +57,6 @@ io.on('connection', socket => {
     socket.broadcast.emit('chatEvent', `${msg.name} has left!`);
   });
 });
-
-    
-function arrayRemove(arr, value) { 
-    
-  return arr.filter(function(ele){ 
-      return ele != value; 
-  });
-}
-
-
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
