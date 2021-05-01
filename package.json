@@ -1,13 +1,13 @@
 {
   "name": "server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devStart":"nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Orango Company",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",

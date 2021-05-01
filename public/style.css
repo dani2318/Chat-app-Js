@@ -139,10 +139,11 @@ body {
 }/*NABBO*/
 .Chat{
     width:50%;
-    height: 100%;
+    height: 97%;
     border: 1px solid rgb(131, 0, 0);
     overflow-y: scroll;
     scroll-behavior: auto;
+    resize: horizontal; transition: 1ms;
     scroll-snap-align: end;
     scroll-snap-stop: always;
 }
@@ -151,5 +152,21 @@ body {
   border: 1px solid orange;
   width:50%;
   height: 50%;
+  overflow-y: scroll;
   backdrop-filter: blur(10px);
+}
+
+#Users {
+  list-style-type: none;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+#Users > li {
+  padding: 0.5rem 1rem;
+}
+
+#Users > li:nth-child(odd) {
+  background: #494949;
 }

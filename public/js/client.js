@@ -1,29 +1,20 @@
-function load() {
-    var socket = io();
-    var online = document.getElementById("Users")
-    var usernameIniz = prompt("Inserisci un username", "");
-    socket.on("connection", socket.emit("connected", usernameIniz));
-    console.log(usernameIniz)
-    return usernameIniz;
-}
-
-var nickOnLoad = load();
 var socket = io();
 var messages = document.getElementById("messages");
 var form = document.getElementById("form");
 var input = document.getElementById("input");
-var username = document.getElementById("Username");
+var online = document.getElementById("Users")
+//var username = document.getElementById("Username");
 var nickname = "";
+var username = customUsername();
 
-username.innerHTML = nickOnLoad;
+const CLIENT_UUID = uuidv4();
+
+socket.on("connection", socket.emit("connected", username));
+
 form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (username.value == "" || username == null) {
-        alert("Inserisci un nickname prima di inviare un messaggio!");
-        return;
-    }
     if (input.value) {
-        var msg = [input.value, username.value];
+        var msg = [input.value, username];
         socket.emit("message", msg);
         input.value = "";
     }
@@ -52,19 +43,64 @@ socket.on("response", function (msg) {
     window.scrollTo(0, messages.scrollHeight);
 });
 
+socket.on("disconnect-response",(msg)=>{
+    if(username == msg) console.log("Disconnesso")
+})
 
-setInterval('reqUser()', 1)
+function logout(){
+    socket.emit('logout',username)
+}
+var usrOnline = 0;
+socket.emit('getUsersCount')
+socket.on('userCount', (msg) => {
+    console.log(msg)
+    if (msg == undefined || msg == null) console.log('Errore nel ricevere gli utenti connessi')
+    usrOnline = msg
+});
+
+socket.on("uOnline", function (msg) {
+    console.log("Utenti online:" + msg)
+    console.log("Update Online Users")
+    console.log(usrOnline)
+    clearUser();
+    for(i = 0;i<usrOnline;i++){
+        var item = document.createElement("li");
+        item.textContent = msg[i];
+        online.appendChild(item);
+        window.scrollTo(0, online.scrollHeight);
+    }
+    /*msg.forEach(element => {
+        clearUser();
+        var item = document.createElement("li");
+        item.textContent = element;
+        online.appendChild(item);
+        window.scrollTo(0, online.scrollHeight);
+    });*/
+});
 
 
-function reqUser() {
-    var online = document.getElementById('Users')
-    socket.emit('user online')
-    socket.on("user online", function (msg) {
-        for (i = 0; i < msg.lenght; i++) {
-            var item = document.createElement("li");
-            item.textContent = msg;
-            online.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
-        }
+function clearUser() {
+    online.childNodes.forEach(element => {
+        online.removeChild(element);
     });
 }
+setInterval(`requestOnlineUsers()`, 5000)
+
+function requestOnlineUsers() {
+    socket.emit('user online', CLIENT_UUID)
+}
+
+function uuidv4() {
+    return 'xxxx4xxxyxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+function customUsername() {
+    return 'User-4yxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
