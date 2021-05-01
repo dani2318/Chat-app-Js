@@ -7,12 +7,14 @@ body {
 }
 
 #form {
-  background: rgba(0, 0, 0, 0.15);
-  padding: 0.25rem;
-  position: fixed;
+  z-index: 999;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.25rem;
+
   display: flex;
   margin-top: 0px;
   height: 3rem;
@@ -99,7 +101,7 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
 
 /* Track */
@@ -139,21 +141,24 @@ body {
 }/*NABBO*/
 .Chat{
     width:50%;
-    height: 97%;
-    border: 1px solid rgb(131, 0, 0);
+    height: 95.6%;
     overflow-y: scroll;
     scroll-behavior: auto;
-    resize: horizontal; transition: 1ms;
-    scroll-snap-align: end;
-    scroll-snap-stop: always;
 }
 
 .onlineUser{
+  overflow-x: hidden;
+  transition: all 1.5s;
   border: 1px solid orange;
-  width:50%;
+  width:5%;
   height: 50%;
   overflow-y: scroll;
   backdrop-filter: blur(10px);
+}
+
+.onlineUser:hover{
+  transition: all 1s;
+  width:40%;
 }
 
 #Users {
@@ -169,4 +174,22 @@ body {
 
 #Users > li:nth-child(odd) {
   background: #494949;
+}
+
+#form2 > button {
+  float: right;
+  background: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+}
+
+#form2 > button:hover {
+  transition: all 1s;
+  background: rgb(80, 80, 80);
 }

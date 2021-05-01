@@ -1,0 +1,59 @@
+/*
+socket.on("connection", socket.emit("connected", username));
+
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (input.value) {
+        var msg = [input.value, username];
+        socket.emit("message", msg);
+        input.value = "";
+    }
+});
+
+socket.on("user connected", function (msg) {
+    var item = document.createElement("li");
+    item.textContent = msg[0];
+    nickname = msg[1];
+    username.value = nickname;
+    messages.appendChild(item);
+    window.scrollTo(0, messages.scrollHeight);
+});
+
+
+
+socket.on("response", function (msg) {
+    var item = document.createElement("li");
+    item.textContent = msg;
+    messages.appendChild(item);
+    window.scrollTo(0, messages.scrollHeight);
+});
+
+socket.on("disconnect-response",(msg)=>{
+    if(username == msg) console.log("Disconnesso")
+})
+
+function logout(){
+    socket.emit('logout',username)
+}
+var usrOnline = 0;
+socket.emit('getUsersCount')
+socket.on('userCount', (msg) => {
+    console.log(msg)
+    if (msg == undefined || msg == null) console.log('Errore nel ricevere gli utenti connessi')
+    usrOnline = msg
+});
+
+socket.on("uOnline", function (msg) {
+    socket.emit('getUsersCount')
+    console.log("Utenti online:" + msg)
+    console.log("Update Online Users")
+    clearUser();
+    for(i = 0;i<usrOnline;i++){
+        var item = document.createElement("li");
+        item.textContent = msg[i];
+        online.appendChild(item);
+        window.scrollTo(0, online.scrollHeight);
+    }
+});
+
+*/

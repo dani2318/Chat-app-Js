@@ -1,0 +1,23 @@
+
+//Messaggi input
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (input.value) {
+        var msg = [input.value, username];
+        socket.emit("message", msg);
+        input.value = "";
+    }
+});
+//Messaggi output
+socket.on("chat message", function (msg) {
+    var item = document.createElement("li");
+    item.textContent = msg;
+    messages.appendChild(item);
+    window.scrollTo(0, messages.scrollHeight);
+});
+
+setInterval(`requestOnlineUsers()`, 5000)
+
+function requestOnlineUsers() {
+    socket.emit('user online', CLIENT_UUID)
+}

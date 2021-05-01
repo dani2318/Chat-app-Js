@@ -4,7 +4,8 @@ const http = require('http')
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const utenti=[]
+const utenti=[];
+const room = ["MainChat"];
 var utentiOnlineConta = utenti.length;
 
 app.use(express.static(__dirname + '/public'));
@@ -14,8 +15,11 @@ app.get('/public', (req, res) => {
   res.sendFile(__dirname + '/img/*');
   res.sendFile(__dirname + '/js/*');
 });
-
+  
+/*
 io.on('connection', (socket) => {
+
+
 
   socket.on('connected', (msg) => {
     io.emit('uOnline',utenti)
@@ -26,10 +30,7 @@ io.on('connection', (socket) => {
     io.emit('response', res);
   })
 
-  socket.on('message', (msg) => {
-    var messaggio = msg[1] + ": " + msg[0]
-    io.emit('chat message', messaggio);
-  });
+
 
   socket.on('dUser', (msg) =>{
     console.log("Un client ha interrotto la connessione!")
@@ -43,21 +44,55 @@ io.on('connection', (socket) => {
   });
 
   socket.on('getUsersCount',()=>{
-    console.log("Un client ha interrotto la connessione!")
     io.emit('userCount',utentiOnlineConta)
   });
   socket.on('logout',(msg)=> {
+    console.log("Un client ha interrotto la connessione!")
     for(i = 0;i<utentiOnlineConta;i++){
       if(utenti[i] == msg){
-        utenti.slice(i,1);
+        utenti.pop(i);
         utentiOnlineConta--;
         break;
       }
     }
     io.emit("disconnect-response",msg)
   });
+
+
+  socket.on('message', (msg) => {
+    var messaggio = msg[1] + ": " + msg[0]
+    io.emit('chat message', messaggio);
+  });
 });
+  */
+
+
+io.on('connection', socket => {
+  socket.on('connected',(msg) =>{
+    utenti.push(msg[0]);
+    var connectionRoom = msg[1];
+    console.log("New User:")
+    console.log(utenti[utenti.length-1])
+    socket.emit('rooms',room)
+    socket.join(connectionRoom)
+  });
+  socket.on('message', (msg)=>{
+    var message = msg[0].name+": "+msg[1]
+    socket.emit('chat message',message)
+  });
+
+});
+
+
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
 });
+
+class Utente {
+    constructor(name = "", UUID = "") {
+        this.name = name;
+        this.UUID = UUID;
+        this.socketID = socket.id;
+    }
+}

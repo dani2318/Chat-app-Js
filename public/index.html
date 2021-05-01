@@ -15,18 +15,19 @@
   <div class="container">
     <div class="Chat">
       <ul id="messages"></ul>
+    </div>
+    <div class="messagebar">
       <form id="form" action="">
         <input id="input" autocomplete="off" placeholder="Message" />
         <button>Invia</button>
-        <button onclick="logout()">Esci</button>
+       
       </form>
-      
     </div>
     <div class="onlineUsers">
       <div>
-        <form id="form2" action="">
-          <input id="Username" autocomplete="off" placeholder="Username" />
-        </form>
+        <div id="form2" action="">
+          <button onclick="logout()">Esci</button>
+        </div>
       </div>
       <div class="onlineUser">
         <ul id="Users"></ul>
