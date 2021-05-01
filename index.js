@@ -10,6 +10,8 @@ app.use(express.static(__dirname + '/public'));
 app.get('/public', (req, res) => {
   res.sendFile(__dirname + '/index.html');
   res.sendFile(__dirname + '/style.css');
+  res.sendFile(__dirname + '/img/*');
+  res.sendFile(__dirname + '/js/*');
 });
 
 io.on('connection', (socket) => {
@@ -25,6 +27,8 @@ io.on('connection', (socket) => {
     io.emit('chat message', messaggio);
   });
   
+  io.emit('user online',utenti)
+
 });
 
 server.listen(3000, () => {
