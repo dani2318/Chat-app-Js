@@ -157,6 +157,7 @@ body {
 }
 
 .onlineUser:hover{
+  overflow-x: hidden;
   transition: all 1s;
   width:40%;
 }

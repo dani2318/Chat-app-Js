@@ -4,7 +4,7 @@ const http = require('http')
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const utenti=[];
+var utenti=[];
 const room = ["MainChat"];
 var utentiOnlineConta = utenti.length;
 
@@ -16,72 +16,53 @@ app.get('/public', (req, res) => {
   res.sendFile(__dirname + '/js/*');
 });
   
-/*
-io.on('connection', (socket) => {
-
-
-
-  socket.on('connected', (msg) => {
-    io.emit('uOnline',utenti)
-    utentiOnlineConta++;
-    console.log("Un client ha stabilito una nuova connessione!")
-    utenti.push(msg)
-    var res = `${msg} si è connesso alla chat`
-    io.emit('response', res);
-  })
-
-
-
-  socket.on('dUser', (msg) =>{
-    console.log("Un client ha interrotto la connessione!")
-    utenti.pop(msg);
-    io.emit('uOnline',utenti)
-  });
-  
-  socket.on('user online',(msg)=>{
-    console.log("Client " + msg+": Requested the online users list!")
-    io.emit('uOnline',utenti)
-  });
-
-  socket.on('getUsersCount',()=>{
-    io.emit('userCount',utentiOnlineConta)
-  });
-  socket.on('logout',(msg)=> {
-    console.log("Un client ha interrotto la connessione!")
-    for(i = 0;i<utentiOnlineConta;i++){
-      if(utenti[i] == msg){
-        utenti.pop(i);
-        utentiOnlineConta--;
-        break;
-      }
-    }
-    io.emit("disconnect-response",msg)
-  });
-
-
-  socket.on('message', (msg) => {
-    var messaggio = msg[1] + ": " + msg[0]
-    io.emit('chat message', messaggio);
-  });
-});
-  */
-
-
 io.on('connection', socket => {
+  var connectionRoom;
   socket.on('connected',(msg) =>{
     utenti.push(msg[0]);
-    var connectionRoom = msg[1];
+    connectionRoom = msg[1];
     console.log("New User:")
     console.log(utenti[utenti.length-1])
     socket.emit('rooms',room)
     socket.join(connectionRoom)
-  });
-  socket.on('message', (msg)=>{
-    var message = msg[0].name+": "+msg[1]
-    socket.emit('chat message',message)
+    console.log(socket.rooms)
   });
 
+  socket.on('message', (msg)=>{
+    var message = msg[0].name+": "+msg[2]
+    socket.to(connectionRoom).emit('chat message',message)
+  });
+
+  socket.on('getUsers',()=>{
+    socket.emit('response-Users', utenti)
+  })
+
+  socket.on('leaveing', (msg) => {
+    console.log(msg.room)
+    var i = 0;
+    var trovato = false;
+    utenti.forEach(utente => {
+      console.log(utente != msg)
+      if(utente.name == msg.name) {
+        trovato = true;
+      }
+      if(!trovato){
+        i++;
+      }
+    });
+    console.log(i)
+    utenti.splice(i,1);
+    socket.broadcast.emit('chatEvent', `${msg.name} has left!`);
+  });
 });
+
+    
+function arrayRemove(arr, value) { 
+    
+  return arr.filter(function(ele){ 
+      return ele != value; 
+  });
+}
 
 
 
@@ -90,9 +71,9 @@ server.listen(3000, () => {
 });
 
 class Utente {
-    constructor(name = "", UUID = "") {
-        this.name = name;
-        this.UUID = UUID;
-        this.socketID = socket.id;
-    }
+  constructor(name = "", UUID = "", room = "") {
+      this.name = name;
+      this.UUID = UUID;
+      this.room = room;
+  }
 }

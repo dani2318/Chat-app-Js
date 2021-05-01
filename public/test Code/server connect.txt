@@ -1,0 +1,50 @@
+*
+io.on('connection', (socket) => {
+
+
+
+  socket.on('connected', (msg) => {
+    io.emit('uOnline',utenti)
+    utentiOnlineConta++;
+    console.log("Un client ha stabilito una nuova connessione!")
+    utenti.push(msg)
+    var res = `${msg} si è connesso alla chat`
+    io.emit('response', res);
+  })
+
+
+
+  socket.on('dUser', (msg) =>{
+    console.log("Un client ha interrotto la connessione!")
+    utenti.pop(msg);
+    io.emit('uOnline',utenti)
+  });
+  
+  socket.on('user online',(msg)=>{
+    console.log("Client " + msg+": Requested the online users list!")
+    io.emit('uOnline',utenti)
+  });
+
+  socket.on('getUsersCount',()=>{
+    io.emit('userCount',utentiOnlineConta)
+  });
+
+  socket.on('logout',(msg)=> {
+    console.log("Un client ha interrotto la connessione!")
+    for(i = 0;i<utentiOnlineConta;i++){
+      if(utenti[i] == msg){
+        utenti.pop(i);
+        utentiOnlineConta--;
+        break;
+      }
+    }
+    io.emit("disconnect-response",msg)
+  });
+
+
+  socket.on('message', (msg) => {
+    var messaggio = msg[1] + ": " + msg[0]
+    io.emit('chat message', messaggio);
+  });
+});
+  */
