@@ -27,7 +27,6 @@ io.on('connection', socket => {
     console.log(utenti[utenti.length-1])
     socket.emit('rooms',room)
     socket.join(connectionRoom)
-    console.log(socket.rooms)
   });
 
   socket.on('message', (msg)=>{
@@ -40,7 +39,6 @@ io.on('connection', socket => {
   })
 
   socket.on('leaveing', (msg) => {
-    console.log(msg.room)
     var i = 0;
     var trovato = false;
     utenti.forEach(utente => {
@@ -52,7 +50,6 @@ io.on('connection', socket => {
         i++;
       }
     });
-    console.log(i)
     utenti.splice(i,1);
     socket.broadcast.emit('chatEvent', `${msg.name} has left!`);
   });
