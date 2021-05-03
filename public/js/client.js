@@ -36,7 +36,7 @@ function customUsername() {
 //Network Code!
 
 //Gestione prima connessione
-var profile = new Utente(username,"MainChat", CLIENT_UUID)//[username,CLIENT_UUID]
+var profile = new Utente(username, CLIENT_UUID, "MainChat",)//[username,CLIENT_UUID]
 var data = [profile, "MainChat"]
 socket.on("connection", socket.emit("connected", data));
 

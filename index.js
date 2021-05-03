@@ -42,7 +42,6 @@ io.on('connection', socket => {
     var i = 0;
     var trovato = false;
     utenti.forEach(utente => {
-      console.log(utente != msg)
       if(utente.name == msg.name) {
         trovato = true;
       }
@@ -50,7 +49,9 @@ io.on('connection', socket => {
         i++;
       }
     });
-    utenti.splice(i,1);
+    if(trovato){
+      utenti.splice(i,1);
+    }
     socket.broadcast.emit('chatEvent', `${msg.name} has left!`);
   });
 });
