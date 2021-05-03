@@ -26,7 +26,7 @@ function uuidv4() {
 }
 
 function customUsername() {
-    return 'User-4yxxxxx'.replace(/[xy]/g, function (c) {
+    return 'User-4yxyxyxyx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
@@ -80,6 +80,8 @@ socket.on("chat message", function (msg) {
     window.scrollTo(0, messages.scrollHeight);
 });
 
+
+//Gestione eventi:
 socket.on("chatEvent",(msg) => {
     var item = document.createElement("li")
     item.textContent = msg
@@ -117,4 +119,5 @@ function updateUserlist(msg){
 function logout(){
     socket.emit('leaveing',profile)
     socket.disconnect();
+    window.location.href = "../logout.html"
 }
