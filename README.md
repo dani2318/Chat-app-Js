@@ -4,9 +4,9 @@
 
 ### install the following packages:
  
-    node install express
-    node install socket.io
+    npm install express
+    npm install socket.io
 
 ### Optional:
     
-    node install nodemon
+    npm install nodemon
