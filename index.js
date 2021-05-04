@@ -17,6 +17,7 @@ app.get('/public', (req, res) => {
   res.sendFile(__dirname + '/style.css');
   res.sendFile(__dirname + '/img/*');
   res.sendFile(__dirname + '/js/*');
+  res.sendfile(__dirname + '/css/*')
 });
   
 io.on('connection', socket => {

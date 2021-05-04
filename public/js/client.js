@@ -45,37 +45,50 @@ form.addEventListener("submit", function (e) {
     e.preventDefault();
     if (input.value == "") return;
     if (input.value) {
+        //Invio il messaggio al server
         socket.emit("message", [profile, "MainChat", input.value]);
 
+        //Definisco i valori del messaggio:
         var item = document.createElement("li");
         var sender = profile.name;
         var message = input.value;
 
+        //Aggiungo il messaggio anche per l'utente che lo ha inviato:
         var s = sender + ": ";
         var bold = document.createElement("b")
         bold.style.color = "green"
         bold.innerHTML = s;
         item.appendChild(bold)
         item.innerHTML = item.innerHTML + message;
+
+        //Aggiungo il messaggio alla cronologia dei messaggi:
         messages.appendChild(item);
         window.scrollTo(0, messages.scrollHeight);
+
+        //Svuoto la textbox dei messaggi:
         input.value = "";
     }
 });
 
 //Messaggi output
 socket.on("chat message", function (msg) {
+
+    //Definisco i fattori del messaggio:
     var item = document.createElement("li");
     var elementiMessaggio = msg.split(":")
     var sender = elementiMessaggio[0];
     var message = elementiMessaggio[1];
 
+    //Gestione dello stile dei messaggi:
     var s = sender + ": ";
     var bold = document.createElement("b")
     bold.style.color = "red"
     bold.innerHTML = s;
     item.appendChild(bold)
+    //Concateno il nome utente + il messaggio:
     item.innerHTML = item.innerHTML + message;
+
+    //Aggiungo il messaggio alla cronologia dei messaggi:
     messages.appendChild(item);
     window.scrollTo(0, messages.scrollHeight);
 });
@@ -95,8 +108,9 @@ socket.on('rooms', (msg) => {
     rooms = msg
 });
 
-//Aggiornamento lista utenti
+//Aggiornamento lista utenti (Avvio)
 socket.emit("getUsers")
+//Update della lista utenti
 setInterval('socket.emit("getUsers")', 1000)
 
 socket.on('response-Users', (msg) => {
@@ -104,6 +118,7 @@ socket.on('response-Users', (msg) => {
 })
 
 function updateUserlist(msg){
+    console.log(msg)
     while (online.firstChild) {
         online.removeChild(online.firstChild);
     }
