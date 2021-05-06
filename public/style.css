@@ -142,6 +142,7 @@ body {
 .Chat{
     width:50%;
     height: 95.6%;
+    overflow-x: none;
     overflow-y: scroll;
     scroll-behavior: auto;
 }
@@ -169,7 +170,6 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
-
 #Users > li {
   padding: 0.5rem 1rem;
 }
@@ -214,7 +214,7 @@ body {
   }
   .Chat{
     width:180%;
-    height: 95.6%;
+    height: 170%;
     overflow-y: scroll;
     scroll-behavior: auto;
 }

@@ -10,7 +10,7 @@ button {
   width: 150px;
   height: 50px;
   font-size: 18px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   border-radius: 10px;
   position: relative;
   top: 50%;
@@ -19,10 +19,10 @@ button {
   transform: translate(-120%, -50%);
 }
 
-.active{
-    color: white;
-    background-color: darkgreen;
-    border: 1px solid black;
+.active {
+  color: white;
+  background-color: darkgreen;
+  border: 1px solid black;
 }
 
 button:focus {
@@ -30,6 +30,7 @@ button:focus {
 }
 
 .container {
+  z-index: -1;
   width: 800px;
   height: 400px;
   background-color: white;
@@ -42,12 +43,12 @@ button:focus {
   transform: translate(-50%, -50%);
 }
 
-.text-logout{
-    position: absolute;
+.text-logout {
+  position: absolute;
   top: 30%;
   left: 46.5%;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
-    margin-right: -50%;
+  margin-right: -50%;
   transform: translate(-50%, -50%);
 }

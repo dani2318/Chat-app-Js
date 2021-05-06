@@ -128,7 +128,7 @@ function updateUserlist(msg){
         online.appendChild(item);
     });
 }
-// word-wrap: break-word;
+
 //Disconnessione utente
 
 function logout(){
