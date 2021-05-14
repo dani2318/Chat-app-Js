@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="author" content="dani2318, Co-authored by ...." />
+  <meta name="viewport" content="width=device-width">
+  <meta name="copyright" content="Orango Company" />
+  <title>Orango Chat - Chat</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="Chat">
+      <ul id="messages"></ul>
+    </div>
+    <div class="messagebar">
+      <form id="form" action="">
+        <input id="input" autocomplete="off" placeholder="Message" />
+        <button>Invia</button>
+       
+      </form>
+    </div>
+    <div class="onlineUsers">
+      <div>
+        <div id="form2" action="">
+          <button onclick="logout()">Esci</button>
+        </div>
+      </div>
+      <div class="onlineUser">
+        <ul id="Users"></ul>
+      </div>
+    </div>
+  </div>
+  <script src="js/client.js"></script>
+</body>
+
+</html>

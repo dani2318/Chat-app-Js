@@ -1,40 +1,18 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="author" content="dani2318, Co-authored by ...." />
-  <meta name="viewport" content="width=device-width">
-  <meta name="copyright" content="Orango Company" />
-  <title>Chat</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="/socket.io/socket.io.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="home.css">
+  <script src="home.js"></script>
+  <title>Orango Chat - Home</title>
 </head>
-
 <body>
-  <div class="container">
-    <div class="Chat">
-      <ul id="messages"></ul>
-    </div>
-    <div class="messagebar">
-      <form id="form" action="">
-        <input id="input" autocomplete="off" placeholder="Message" />
-        <button>Invia</button>
-       
-      </form>
-    </div>
-    <div class="onlineUsers">
-      <div>
-        <div id="form2" action="">
-          <button onclick="logout()">Esci</button>
-        </div>
-      </div>
-      <div class="onlineUser">
-        <ul id="Users"></ul>
-      </div>
-    </div>
+  <div id="cont" class="login">
+    <p class="titolo">Benvenuto nella Orango Chat</p>
+    <button class="btnEntra" onclick="window.location = 'chat.html'">ENTRA</button>
+    <p class="style_copy">Copyright Orango Company</p>
   </div>
-  <script src="js/client.js"></script>
 </body>
-
 </html>

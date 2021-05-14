@@ -1,0 +1,57 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    width:100%;
+    height: 100%;
+    background-color: #232323;
+    background-image: url("img/logo.png");
+    background-repeat: no-repeat; background-size: 20%;
+    background-position-x: center;
+}
+
+
+button{
+    border-radius: 15px;
+    width:300px;
+    height:100px;
+    font-size: 24px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    outline: none;
+    background: #333; 
+    color: #fff;
+    box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
+}
+
+.login{
+    /*border:1px solid red;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(5px);
+}
+
+.titolo{
+    width: 100%;
+    font-size: 48px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #fff;
+    margin-right: -50%;
+    transform: translate(0, -50%);
+    border-bottom: 3px solid rgba(119, 119, 119, 0.1);
+}
+
+.btnEntra{
+    margin-right: -50%;
+    transform: translate(45%, -50%);
+}
+
+.style_copy{
+    color:white;
+    font-size: 12px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    position: absolute;
+    top:100%;
+    float: right;
+}
